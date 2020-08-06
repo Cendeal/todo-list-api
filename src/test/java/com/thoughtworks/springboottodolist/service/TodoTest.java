@@ -43,9 +43,9 @@ public class TodoTest {
         TodoDto todoDto = mock(TodoDto.class);
         Todo todo = new Todo();
         given(todoMapper.todoDto2Todo(todoDto)).willReturn(todo);
-        given(todoRepository.save(todo)).willReturn(isA(Todo.class));
+        given(todoRepository.save(todo)).willReturn(todo);
         // when
-        todoService.addTodo(todoDto);
+        Todo todoSaved = todoService.addTodo(todoDto);
         // then
         verify(todoRepository, times(1)).save(todo);
     }
