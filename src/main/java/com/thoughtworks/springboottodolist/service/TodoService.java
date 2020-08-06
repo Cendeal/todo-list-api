@@ -8,6 +8,7 @@ import com.thoughtworks.springboottodolist.model.Todo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -30,6 +31,7 @@ public class TodoService {
 
     public TodoDto addTodo(TodoDto todoDto) {
         Todo todo = todoMapper.todoDto2Todo(todoDto);
+        todo.setCreated(new Date());
         return todoMapper.todo2TodoDto(todoRepository.save(todo));
     }
 
@@ -42,6 +44,7 @@ public class TodoService {
     public TodoDto updateTodo(TodoDto todoDto) throws BusinessException {
         Todo todo = todoMapper.todoDto2Todo(todoDto);
         Todo todoWaitUpdate = todoRepository.findById(todo.getId()).orElseThrow(() -> new BusinessException("Not Found This Todo"));
+        todoWaitUpdate.setUpdated(new Date());
         if (Objects.nonNull(todo.getType())) {
             todoWaitUpdate.setType(todo.getType());
         }
@@ -50,9 +53,6 @@ public class TodoService {
         }
         if (Objects.nonNull(todo.getText())) {
             todoWaitUpdate.setText(todo.getText());
-        }
-        if (Objects.nonNull(todo.getUpdated())) {
-            todoWaitUpdate.setUpdated(todo.getUpdated());
         }
         if (Objects.nonNull(todo.getTitle())) {
             todoWaitUpdate.setTitle(todo.getTitle());
