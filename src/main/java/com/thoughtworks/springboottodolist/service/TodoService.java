@@ -2,6 +2,7 @@ package com.thoughtworks.springboottodolist.service;
 
 import com.thoughtworks.springboottodolist.dao.TodoRepository;
 import com.thoughtworks.springboottodolist.dto.TodoDto;
+import com.thoughtworks.springboottodolist.exception.BusinessException;
 import com.thoughtworks.springboottodolist.mapper.TodoMapper;
 import com.thoughtworks.springboottodolist.model.Todo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,5 +29,10 @@ public class TodoService {
     public Todo addTodo(TodoDto todoDto) {
         Todo todo = todoMapper.todoDto2Todo(todoDto);
         return todoRepository.save(todo);
+    }
+
+    public Todo deleteById(int id) throws BusinessException {
+
+        return null;
     }
 }

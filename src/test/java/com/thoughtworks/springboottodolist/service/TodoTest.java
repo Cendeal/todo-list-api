@@ -1,7 +1,9 @@
 package com.thoughtworks.springboottodolist.service;
 
+import com.sun.xml.bind.v2.TODO;
 import com.thoughtworks.springboottodolist.dao.TodoRepository;
 import com.thoughtworks.springboottodolist.dto.TodoDto;
+import com.thoughtworks.springboottodolist.exception.BusinessException;
 import com.thoughtworks.springboottodolist.mapper.TodoMapper;
 import com.thoughtworks.springboottodolist.model.Todo;
 import org.junit.jupiter.api.Test;
@@ -12,6 +14,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.BDDMockito.given;
@@ -48,5 +51,19 @@ public class TodoTest {
         Todo todoSaved = todoService.addTodo(todoDto);
         // then
         verify(todoRepository, times(1)).save(todo);
+    }
+
+    @Test
+    void should_return_todo_when_delete_todo_given_todo_id() throws BusinessException {
+        // given
+        int id = 1;
+        Todo todo = new Todo();
+        given(todoRepository.findById(id)).willReturn(Optional.of(todo));
+        // when
+        Todo todoDeleted = todoService.deleteById(id);
+        // then
+        verify(todoRepository,times(1)).deleteById(id);
+        assertEquals(todo,todoDeleted);
+
     }
 }
