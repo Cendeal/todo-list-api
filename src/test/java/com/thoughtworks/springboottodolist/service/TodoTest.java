@@ -66,4 +66,20 @@ public class TodoTest {
         assertEquals(todo,todoDeleted);
 
     }
+
+    @Test
+    void should_return_todo_when_update_todo_given_todo_dto() throws BusinessException {
+        // given
+        TodoDto todoDto = mock(TodoDto.class);
+        Todo todo = new Todo();
+        given(todoMapper.todoDto2Todo(todoDto)).willReturn(todo);
+        given(todoRepository.findById(todo.getId())).willReturn(Optional.of(todo));
+        // when
+        todoService.updateTodo(todoDto);
+        // then
+        verify(todoRepository,times(1)).findById(todo.getId());
+        verify(todoRepository,times(1)).save(todo);
+
+    }
+
 }
