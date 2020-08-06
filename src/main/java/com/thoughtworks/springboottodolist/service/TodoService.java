@@ -32,7 +32,8 @@ public class TodoService {
     }
 
     public Todo deleteById(int id) throws BusinessException {
-
-        return null;
+        Todo todo = todoRepository.findById(id).orElseThrow(() -> new BusinessException("Not Found This Todo"));
+        todoRepository.deleteById(id);
+        return todo;
     }
 }
