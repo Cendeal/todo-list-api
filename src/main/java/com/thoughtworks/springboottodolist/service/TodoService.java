@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class TodoService {
@@ -37,7 +38,24 @@ public class TodoService {
         return todo;
     }
 
-    public Todo updateTodo(TodoDto todoDto) {
-        return null;
+    public Todo updateTodo(TodoDto todoDto) throws BusinessException {
+        Todo todo = todoMapper.todoDto2Todo(todoDto);
+        Todo todoWaitUpdate = todoRepository.findById(todo.getId()).orElseThrow(() -> new BusinessException("Not Found This Todo"));
+        if (Objects.nonNull(todo.getType())) {
+            todoWaitUpdate.setType(todo.getType());
+        }
+        if (Objects.nonNull(todo.getStatus())) {
+            todoWaitUpdate.setStatus(todo.getStatus());
+        }
+        if (Objects.nonNull(todo.getText())) {
+            todoWaitUpdate.setText(todo.getText());
+        }
+        if (Objects.nonNull(todo.getUpdated())) {
+            todoWaitUpdate.setUpdated(todo.getUpdated());
+        }
+        if (Objects.nonNull(todo.getTitle())) {
+            todoWaitUpdate.setTitle(todo.getTitle());
+        }
+        return todoRepository.save(todoWaitUpdate);
     }
 }

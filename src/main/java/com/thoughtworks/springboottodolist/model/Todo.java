@@ -8,7 +8,7 @@ import java.util.Date;
 public class Todo {
     @Id
     private Integer id;
-    private boolean status;
+    private Boolean status;
     private String text;
     private String title;
     private String type;
@@ -24,7 +24,7 @@ public class Todo {
         this.id = id;
     }
 
-    public boolean isStatus() {
+    public Boolean getStatus() {
         return status;
     }
 
