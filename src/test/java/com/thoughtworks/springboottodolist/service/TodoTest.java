@@ -48,7 +48,7 @@ public class TodoTest {
         given(todoMapper.todoDto2Todo(todoDto)).willReturn(todo);
         given(todoRepository.save(todo)).willReturn(todo);
         // when
-        Todo todoSaved = todoService.addTodo(todoDto);
+        TodoDto todoSaved = todoService.addTodo(todoDto);
         // then
         verify(todoRepository, times(1)).save(todo);
     }
