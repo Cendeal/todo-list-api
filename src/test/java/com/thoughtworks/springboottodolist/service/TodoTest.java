@@ -34,7 +34,7 @@ public class TodoTest {
         // given
         given(todoRepository.findAll()).willReturn(Collections.emptyList());
         // when
-        List<Todo> todoList = todoService.getAll();
+        List<TodoDto> todoList = todoService.getAll();
         // then
         verify(todoRepository, times(1)).findAll();
         assertEquals(0, todoList.size());
@@ -60,10 +60,9 @@ public class TodoTest {
         Todo todo = new Todo();
         given(todoRepository.findById(id)).willReturn(Optional.of(todo));
         // when
-        Todo todoDeleted = todoService.deleteById(id);
+        TodoDto todoDeleted = todoService.deleteById(id);
         // then
         verify(todoRepository,times(1)).deleteById(id);
-        assertEquals(todo,todoDeleted);
 
     }
 

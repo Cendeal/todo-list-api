@@ -1,7 +1,10 @@
 package com.thoughtworks.springboottodolist.dto;
 
+import lombok.Data;
+
 import java.util.Date;
 
+@Data
 public class TodoDto {
     private Integer id;
     private boolean status;

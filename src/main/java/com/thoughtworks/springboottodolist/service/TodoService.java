@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Service
 public class TodoService {
@@ -23,22 +24,22 @@ public class TodoService {
         this.todoMapper = todoMapper;
     }
 
-    public List<Todo> getAll() {
-        return todoRepository.findAll();
+    public List<TodoDto> getAll() {
+        return todoRepository.findAll().stream().map(todoMapper::todo2TodoDto).collect(Collectors.toList());
     }
 
-    public Todo addTodo(TodoDto todoDto) {
+    public TodoDto addTodo(TodoDto todoDto) {
         Todo todo = todoMapper.todoDto2Todo(todoDto);
-        return todoRepository.save(todo);
+        return todoMapper.todo2TodoDto(todoRepository.save(todo));
     }
 
-    public Todo deleteById(int id) throws BusinessException {
+    public TodoDto deleteById(int id) throws BusinessException {
         Todo todo = todoRepository.findById(id).orElseThrow(() -> new BusinessException("Not Found This Todo"));
         todoRepository.deleteById(id);
-        return todo;
+        return todoMapper.todo2TodoDto(todo);
     }
 
-    public Todo updateTodo(TodoDto todoDto) throws BusinessException {
+    public TodoDto updateTodo(TodoDto todoDto) throws BusinessException {
         Todo todo = todoMapper.todoDto2Todo(todoDto);
         Todo todoWaitUpdate = todoRepository.findById(todo.getId()).orElseThrow(() -> new BusinessException("Not Found This Todo"));
         if (Objects.nonNull(todo.getType())) {
@@ -56,6 +57,6 @@ public class TodoService {
         if (Objects.nonNull(todo.getTitle())) {
             todoWaitUpdate.setTitle(todo.getTitle());
         }
-        return todoRepository.save(todoWaitUpdate);
+        return todoMapper.todo2TodoDto(todoRepository.save(todoWaitUpdate));
     }
 }
