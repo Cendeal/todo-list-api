@@ -11,7 +11,7 @@ public class Todo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private Boolean status;
+    private boolean status;
     private String text;
     private String title;
     private String type;
@@ -27,7 +27,7 @@ public class Todo {
         this.id = id;
     }
 
-    public Boolean getStatus() {
+    public boolean getStatus() {
         return status;
     }
 

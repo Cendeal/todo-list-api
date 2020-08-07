@@ -35,6 +35,6 @@ public class TodoController {
     @PutMapping("/{id}")
     public TodoDto updateTodo(@RequestBody TodoDto todoDto,@PathVariable int id) throws BusinessException {
         todoDto.setId(id);
-        return todoService.deleteById(id);
+        return todoService.updateTodo(todoDto);
     }
 }
