@@ -3,21 +3,16 @@
  */
 
 plugins {
+    id 'org.springframework.boot' version '2.3.2.RELEASE'
+    id 'io.spring.dependency-management' version '1.0.9.RELEASE'
     id 'java'
-    id 'jacoco'
 }
 
 repositories {
-    //mavenCentral()
-    maven {
-        url 'http://maven.aliyun.com/nexus/content/groups/public/'
-    }
-}
-
-jacocoTestReport {
-    reports {
-        csv.enabled true
-    }
+    mavenLocal()
+    maven { url 'https://maven.aliyun.com/repository/public' }
+    maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
+    mavenCentral()
 }
 
 
